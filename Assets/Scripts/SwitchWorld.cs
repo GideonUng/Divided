@@ -24,7 +24,6 @@ public class SwitchWorld : MonoBehaviour
 
     public PlayerMovement playerMovement;
 
-    public MoveObject moveObject;
 
     public bool canSwitch = true;
 
@@ -96,14 +95,9 @@ public class SwitchWorld : MonoBehaviour
             {
                 g.layer = 8;
             }
-            if (moveObject.Moving)
-            {
-                moveObject.ReleaseObject();
-            }
 
             foreach (GameObject g in GameObject.FindGameObjectsWithTag("Button"))
             {
-                g.GetComponent<ButtonScript>().OnTriggerExit2D(new Collider2D());
                 g.GetComponent<OpenDoor>().OnTriggerExit2D(new Collider2D());
                 g.GetComponent<Animator>().Play("buttonUnpressed");
             }

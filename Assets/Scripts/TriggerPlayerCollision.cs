@@ -15,14 +15,7 @@ public class TriggerPlayerCollision : MonoBehaviour
 		Taggable taggable = other.GetComponent<Taggable>();
 		if (taggable != null && taggable.Climbable)
 		{
-			if (right)
-			{
-				movement.canClimbRight();
-			}
-			else
-			{
-				movement.canClimbLeft();
-			}
+			
 		}
 		else
 		{
@@ -47,6 +40,5 @@ public class TriggerPlayerCollision : MonoBehaviour
 		{
 			movement.unblockedLeft();
 		}
-
 	}
 }
