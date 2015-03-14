@@ -13,6 +13,18 @@ public class PlayerMovement : MonoBehaviour
 	private bool blockedLeft;
 	private bool blockedRight;
 
+	void Update()
+	{
+		if (Input.GetKey(KeyCode.A))
+		{
+			MoveLeft();
+		}
+		if (Input.GetKey(KeyCode.D))
+		{
+			MoveRight();
+		}
+	}
+
 	public void collidedLeft()
 	{
 		if (moving)
@@ -41,17 +53,12 @@ public class PlayerMovement : MonoBehaviour
 
 	public void MoveRight()
 	{
-		Debug.Log("MoveLeft");
-		
-		if (!blockedRight)
-		{
-
-		}
+		GetComponent<Rigidbody2D>().transform.Translate(Speed * Time.deltaTime, 0, 0);
 	}
 
 	public void MoveLeft()
 	{
-
+		GetComponent<Rigidbody2D>().transform.Translate(-Speed * Time.deltaTime, 0, 0);
 	}
 
 	public void StopWalking()
