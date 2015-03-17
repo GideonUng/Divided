@@ -18,18 +18,32 @@ public class PoligonEditor : EditorWindow
 
 	void OnGUI()
 	{
-		GameObject a = Selection.activeGameObject;
-		
-		foreach (Vector3 v in a.GetComponent<PolygonCollider2D>().GetPath(0))
-		{
-			GUILayout.TextArea(v.ToString());
-		}
-		
-		if (GUILayout.Button("Apply"))
-		{
-			a.GetComponent<PolygonCollider2D>().SetPath(0, new[] { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1) });
-		}
+		PolygonCollider2D a = Selection.activeGameObject.GetComponent<PolygonCollider2D>();
 
+		if (a != null)
+		{
+			Vector2[] vS = new Vector2[a.GetPath(0).Length];
+			if (GUILayout.Button("Round"))
+			{
+				int i = 0;
+				foreach (Vector2 v in a.GetPath(0))
+				{
+					vS[i] = new Vector2(Mathf.CeilToInt(v.x), Mathf.Round(v.y));
+					i++;
+				}
+				a.SetPath(0, vS);
+			}
+
+			foreach (Vector2 v in a.GetPath(0))
+			{
+				GUILayout.TextArea(v.ToString());
+			}
+
+			if (GUILayout.Button("Apply"))
+			{
+				a.SetPath(0, new[] { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 1) });
+			}
+		}
 	}
 }
 
