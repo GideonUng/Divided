@@ -3,10 +3,7 @@ using UnityEngine;
 
 public class PoligonEditor : EditorWindow
 {
-	string myString = "Hello World";
-	bool groupEnabled;
-	bool myBool = true;
-	float myFloat = 1.23f;
+	int digits = 100;
 
 	// Add menu item named "My Window" to the Window menu
 	[MenuItem("Window/My Window")]
@@ -18,17 +15,17 @@ public class PoligonEditor : EditorWindow
 
 	void OnGUI()
 	{
-		PolygonCollider2D a = Selection.activeGameObject.GetComponent<PolygonCollider2D>();
-
-		if (a != null)
+		if (Selection.activeGameObject.GetComponent<PolygonCollider2D>() != null)
 		{
+			PolygonCollider2D a = Selection.activeGameObject.GetComponent<PolygonCollider2D>();
+
 			Vector2[] vS = new Vector2[a.GetPath(0).Length];
 			if (GUILayout.Button("Round"))
 			{
 				int i = 0;
 				foreach (Vector2 v in a.GetPath(0))
 				{
-					vS[i] = new Vector2(Mathf.CeilToInt(v.x), Mathf.Round(v.y));
+					vS[i] = new Vector2(Mathf.Round(v.x * digits) / digits, Mathf.Round(v.y * digits) / digits);
 					i++;
 				}
 				a.SetPath(0, vS);
