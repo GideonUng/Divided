@@ -15,7 +15,7 @@ public class PoligonEditor : EditorWindow
 
 	void OnGUI()
 	{
-		if (Selection.activeGameObject.GetComponent<PolygonCollider2D>() != null)
+		if (Selection.activeGameObject.GetComponent<PolygonCollider2D>() ?? null)
 		{
 			PolygonCollider2D a = Selection.activeGameObject.GetComponent<PolygonCollider2D>();
 
