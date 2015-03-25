@@ -1,16 +1,27 @@
 ﻿Shader "Custom/Shadows" {
     Properties {
-        _MainTex ("Base (RGB)", 2D) = "white" {}
+        _MainTex ("Greenscreen", 2D) = "white" {}
         _Background ("Background", 2D) = "white" {}
+        _DirectionX ("Direction X", Float) = 0.03
+        _DirectionY ("Direction Y", Float) = 0.03
+        _Iterations ("Iterations", Float) = 15
+        _ShadowOffset ("Offset", Float) = 2
+        _ShadowStrength ("Shadow Strength", Float) = 0.3
     }
     SubShader {
         Pass {
             CGPROGRAM
+            #pragma target 3.0
             #pragma vertex vert_img
             #pragma fragment frag
 
             #include "UnityCG.cginc"
             
+            uniform fixed _DirectionX;
+            uniform fixed _DirectionY;
+            uniform fixed _Iterations;
+            uniform fixed _ShadowOffset;
+            uniform fixed _ShadowStrength;
             uniform sampler2D _MainTex;
             uniform sampler2D _Background;
 
@@ -38,20 +49,20 @@
             }
             
             fixed4 frag(v2f_img i) : SV_Target {
-            	//fixed4 correctColor = calcCorrectColor(tex2D(_MainTex, i.uv));
-            	//return blend(tex2D(_Background, i.uv), correctColor, correctColor.a);
-
             	fixed4 bgColor = tex2D(_Background, i.uv);
-                        
-            	float shadowLength = 0.03;
-                float iterations = 15;
-                float shadowStrength = 0.3;
+                
+                float effectiveIterations = _Iterations + _ShadowOffset;
                 
                 float strongestShadow = 0.0;
-                float iteration = 0;
-                for( iteration = shadowLength/iterations; iteration <= shadowLength; iteration += shadowLength/iterations) {
-                	fixed4 fgColor = calcCorrectColor(tex2D(_MainTex, half2(i.uv.x + iteration, i.uv.y + iteration)));
-            		float strength = (1 - iteration / shadowLength) * shadowStrength * fgColor.a;
+            	float iteration;
+                for( iteration = 0; iteration < 15; iteration += 1.0) {
+                	float offsetIteration = iteration + _ShadowOffset;
+                
+                	float xOffset = (offsetIteration/effectiveIterations)*_DirectionX;
+                	float yOffset = (offsetIteration/effectiveIterations)*_DirectionY;
+                
+                	fixed4 fgColor = calcCorrectColor(tex2D(_MainTex, half2(i.uv.x + xOffset, i.uv.y + yOffset)));
+            		float strength = (1 - offsetIteration / effectiveIterations) * _ShadowStrength * fgColor.a;
             		strongestShadow = max(strongestShadow, strength);
                 }
                 

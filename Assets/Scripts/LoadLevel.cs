@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LoadLevel : MonoBehaviour {
+public class LoadLevel : MonoBehaviour
+{
 
-	public void loadScene(string level)
+	public void loadScene (string level)
 	{
 		Application.LoadLevel (level);
 	}
 
-	public void loadCredits()
+	public void loadCredits ()
 	{
 		Application.LoadLevel ("Credits");
 	}
 
-	public void gameStart()
+	public void gameStart ()
 	{
 		Application.LoadLevel ("Intro");
 	}
