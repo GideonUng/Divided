@@ -4,7 +4,6 @@
         _Background ("Background", 2D) = "white" {}
         _DirectionX ("Direction X", Float) = 0.03
         _DirectionY ("Direction Y", Float) = 0.03
-        _Iterations ("Iterations", Float) = 15
         _ShadowOffset ("Offset", Float) = 2
         _ShadowStrength ("Shadow Strength", Float) = 0.3
     }
@@ -19,7 +18,6 @@
             
             uniform fixed _DirectionX;
             uniform fixed _DirectionY;
-            uniform fixed _Iterations;
             uniform fixed _ShadowOffset;
             uniform fixed _ShadowStrength;
             uniform sampler2D _MainTex;
@@ -50,12 +48,13 @@
             
             fixed4 frag(v2f_img i) : SV_Target {
             	fixed4 bgColor = tex2D(_Background, i.uv);
-                
-                float effectiveIterations = _Iterations + _ShadowOffset;
+
+                float iterations = 15;
+				float effectiveIterations = iterations + _ShadowOffset;
                 
                 float strongestShadow = 0.0;
             	float iteration;
-                for( iteration = 0; iteration < 15; iteration += 1.0) {
+                for( iteration = 0; iteration < iterations; iteration += 1.0) {
                 	float offsetIteration = iteration + _ShadowOffset;
                 
                 	float xOffset = (offsetIteration/effectiveIterations)*_DirectionX;
