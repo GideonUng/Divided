@@ -17,6 +17,10 @@ public class PlayerMovement : MonoBehaviour
 		if (Input.GetKey (KeyCode.RightArrow)) {
 			MoveRight ();
 		}
+		
+		if (transform.position.y < -7) {
+			transform.position = new Vector3 (transform.position.x, 7, transform.position.z);
+		}
 	}
 	
 	public void MoveRight ()
