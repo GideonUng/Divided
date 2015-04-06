@@ -4,66 +4,40 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour
 {
 	public float Speed = 3;
-
-	public GameObject PlayerWhite;
-	public GameObject PlayerBlack;
-
-	private bool moving;
-	private Vector3 targetPos;
-	private bool blockedLeft;
-	private bool blockedRight;
-
-	void Update()
+	private Rigidbody2D body;
+	public Collider2D collider;
+	
+	public void Start ()
 	{
-		if (Input.GetKey(KeyCode.A))
-		{
-			MoveLeft();
+		body = GetComponent<Rigidbody2D> ();
+	}
+	
+	public void Update ()
+	{
+		bool moving = false;
+		if (Input.GetKey (KeyCode.LeftArrow)) {
+			MoveLeft ();
+			moving = true;
 		}
-		if (Input.GetKey(KeyCode.D))
-		{
-			MoveRight();
+		if (Input.GetKey (KeyCode.RightArrow)) {
+			MoveRight ();
+			moving = true;
 		}
+//		if (moving) {
+//			collider.sharedMaterial.friction = 0;
+//		} else {
+//			collider.sharedMaterial.friction = 15;
+//		}
 	}
-
-	public void collidedLeft()
+	
+	public void MoveRight ()
 	{
-		if (moving)
-		{
-			blockedLeft = true;
-		}
+		GetComponent<Rigidbody2D> ().transform.Translate (Speed * Time.deltaTime, 0, 0);
 	}
-
-	public void collidedRight()
+	
+	public void MoveLeft ()
 	{
-		if (moving)
-		{
-			blockedRight = true;
-		}
+		GetComponent<Rigidbody2D> ().transform.Translate (-Speed * Time.deltaTime, 0, 0);
 	}
-
-	public void unblockedRight()
-	{
-		blockedRight = false;
-	}
-
-	public void unblockedLeft()
-	{
-		blockedLeft = false;
-	}
-
-	public void MoveRight()
-	{
-		GetComponent<Rigidbody2D>().transform.Translate(Speed * Time.deltaTime, 0, 0);
-	}
-
-	public void MoveLeft()
-	{
-		GetComponent<Rigidbody2D>().transform.Translate(-Speed * Time.deltaTime, 0, 0);
-	}
-
-	public void StopWalking()
-	{
-		GetComponent<Animator>().SetBool("Walking", false);
-		moving = false;
-	}
+					
 }

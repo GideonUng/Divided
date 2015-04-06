@@ -5,20 +5,19 @@ public class SwitchWorld : MonoBehaviour
 {
 	public Camera CameraWhite;
 	public Camera CameraBlack;
+	public bool white = true;
 
-	void Update()
+	void Update ()
 	{
-		if (Input.GetKeyUp(KeyCode.Space))
-		{
-			if (CameraBlack.depth == 1)
-			{
-				CameraBlack.depth = 0;
-				CameraWhite.depth = 1;
-			}
-			else if (CameraWhite.depth == 1)
-			{
-				CameraBlack.depth = 1;
-				CameraWhite.depth = 0;
+		if (Input.GetKeyUp (KeyCode.Space)) {
+			if (white) {
+				CameraWhite.enabled = false;
+				CameraBlack.enabled = true;
+				white = false;
+			} else {
+				CameraWhite.enabled = true;
+				CameraBlack.enabled = false;
+				white = true;
 			}
 		}
 	}
