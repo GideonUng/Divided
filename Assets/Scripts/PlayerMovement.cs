@@ -3,18 +3,21 @@ using System.Collections;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+	public Controls controls;
 	public float Speed = 3;
 	
 	public void Start ()
 	{
+		controls = FindObjectOfType<Controls> ();
 	}
 	
 	public void Update ()
 	{
-		if (Input.GetKey (KeyCode.LeftArrow)) {
+		if (controls.Left) {
 			MoveLeft ();
 		}
-		if (Input.GetKey (KeyCode.RightArrow)) {
+		if (controls.Right) {
 			MoveRight ();
 		}
 		

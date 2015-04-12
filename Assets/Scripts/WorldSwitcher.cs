@@ -7,10 +7,12 @@ public class WorldSwitcher : MonoBehaviour
 	public bool white = true;
 	private CameraWorldSwitcher[] camSwitchers;
 	private	PlayerWorldSwitcher[] playerSwitchers;
-
+	public Controls controls;
+	
 	// Use this for initialization
 	void Start ()
 	{
+		controls = FindObjectOfType<Controls> ();
 		camSwitchers = (CameraWorldSwitcher[])FindObjectsOfType (typeof(CameraWorldSwitcher));
 		playerSwitchers = (PlayerWorldSwitcher[])FindObjectsOfType (typeof(PlayerWorldSwitcher));
 	}
@@ -18,7 +20,7 @@ public class WorldSwitcher : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Input.GetKeyUp (KeyCode.Space)) {
+		if (controls.Switch) {
 			white = !white;
 			foreach (CameraWorldSwitcher switcher in camSwitchers) {
 				switcher.Switch (white);
