@@ -26,7 +26,7 @@ public class Flashlight : MonoBehaviour
 		{
 			meshRenderer.enabled = true;
 
-			Vector3 screenPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));
+			Vector3 screenPosition = Camera.current.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));
 			transform.position = new Vector3(screenPosition.x, screenPosition.y, transform.position.z);
 		}
 		else

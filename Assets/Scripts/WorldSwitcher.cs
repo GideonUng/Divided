@@ -9,7 +9,6 @@ public class WorldSwitcher : MonoBehaviour
 	private	PlayerWorldSwitcher[] playerSwitchers;
 	public Controls controls;
 	
-	// Use this for initialization
 	void Start ()
 	{
 		controls = FindObjectOfType<Controls> ();
@@ -17,7 +16,6 @@ public class WorldSwitcher : MonoBehaviour
 		playerSwitchers = (PlayerWorldSwitcher[])FindObjectsOfType (typeof(PlayerWorldSwitcher));
 	}
 	
-	// Update is called once per frame
 	void Update ()
 	{
 		if (controls.Switch) {
