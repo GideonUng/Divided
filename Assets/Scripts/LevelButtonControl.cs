@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class LevelButtonControl : MonoBehaviour {
+public class LevelButtonControl : MonoBehaviour
+{
 
-	public void returnToMainMenu()
+	public void returnToMainMenu ()
 	{
 		Application.LoadLevel ("MainMenu");
 	}
 
-	public void reloadLevel()
+	public void reloadLevel ()
 	{
-		Application.LoadLevel(Application.loadedLevel);
+		Application.LoadLevel (Application.loadedLevel);
 	}
 }

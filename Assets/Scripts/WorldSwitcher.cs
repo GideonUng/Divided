@@ -16,8 +16,8 @@ public class WorldSwitcher : MonoBehaviour
 		controls = FindObjectOfType<Controls> ();
 		camSwitchers = (CameraWorldSwitcher[])FindObjectsOfType (typeof(CameraWorldSwitcher));
 		playerSwitchers = (PlayerWorldSwitcher[])FindObjectsOfType (typeof(PlayerWorldSwitcher));
-		whiteCamera = GameObject.Find ("CameraWhite").GetComponent<Camera>();
-		blackCamera = GameObject.Find ("CameraBlack").GetComponent<Camera>();
+		whiteCamera = GameObject.Find ("CameraWhite").GetComponent<Camera> ();
+		blackCamera = GameObject.Find ("CameraBlack").GetComponent<Camera> ();
 	}
 	
 	void Update ()
@@ -33,7 +33,8 @@ public class WorldSwitcher : MonoBehaviour
 		}
 	}
 
-	public Camera getActiveCamera(){
+	public Camera getActiveCamera ()
+	{
 		if (white) {
 			return whiteCamera;
 		} else {
@@ -41,7 +42,8 @@ public class WorldSwitcher : MonoBehaviour
 		}
 	}
 
-	public Camera getInactiveCamera(){
+	public Camera getInactiveCamera ()
+	{
 		if (!white) {
 			return whiteCamera;
 		} else {
