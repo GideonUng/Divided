@@ -22,7 +22,7 @@ public class WorldSwitcher : MonoBehaviour
 	
 	void Update ()
 	{
-		if (controls.Switch) {
+		if (controls.Switch != white) {
 			white = !white;
 			foreach (CameraWorldSwitcher switcher in camSwitchers) {
 				switcher.Switch (white);

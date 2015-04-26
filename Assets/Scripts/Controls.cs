@@ -4,7 +4,8 @@ using System.Collections;
 public class Controls : MonoBehaviour
 {
 
-	private bool right, left, switchValue;
+	private bool right, left;
+	private bool switchValue = true;
 	
 	public bool Right { 
 		get {
@@ -15,7 +16,7 @@ public class Controls : MonoBehaviour
 		}
 	}
 
-	public bool Left { 
+	public bool Left {
 		get {
 			return left || Input.GetKey (KeyCode.LeftArrow);
 		}
@@ -26,7 +27,10 @@ public class Controls : MonoBehaviour
 	
 	public bool Switch { 
 		get {
-			return switchValue || Input.GetKeyDown (KeyCode.Space);
+			if(Input.GetKeyDown (KeyCode.Space)){
+				switchValue = !switchValue;
+			}
+			return switchValue;
 		}
 		set {
 			switchValue = value;
