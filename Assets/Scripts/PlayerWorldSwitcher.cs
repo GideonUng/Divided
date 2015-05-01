@@ -9,6 +9,10 @@ public class PlayerWorldSwitcher : MonoBehaviour
 
 	public void Switch (bool white)
 	{
+		if (whiteCollider == null || blackCollider == null) {
+			return;
+		}
+	
 		if (white) {
 			whiteCollider.enabled = true;
 			blackCollider.enabled = false;

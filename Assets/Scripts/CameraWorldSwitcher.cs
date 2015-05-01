@@ -6,10 +6,13 @@ public class CameraWorldSwitcher : MonoBehaviour
 	public Camera CameraWhite;
 	public Camera CameraBlack;
 
-	public void Switch(bool white)
+	public void Switch (bool white)
 	{
-		if (white)
-		{
+		if (CameraWhite == null || CameraBlack == null) {
+			return;
+		}
+	
+		if (white) {
 			//CameraWhite.enabled = true;
 			//CameraBlack.enabled = false;
 
@@ -18,9 +21,7 @@ public class CameraWorldSwitcher : MonoBehaviour
 
 			CameraWhite.depth = 0;
 			CameraBlack.depth = -1;
-		}
-		else
-		{
+		} else {
 			//	CameraWhite.enabled = false;
 			//	CameraBlack.enabled = true;
 

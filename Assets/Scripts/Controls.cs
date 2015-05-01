@@ -27,7 +27,7 @@ public class Controls : MonoBehaviour
 	
 	public bool Switch { 
 		get {
-			if(Input.GetKeyDown (KeyCode.Space)){
+			if (Input.GetKeyDown (KeyCode.Space)) {
 				switchValue = !switchValue;
 			}
 			return switchValue;
