@@ -6,6 +6,10 @@
         _DirectionY ("Direction Y", Float) = 0.03
         _ShadowOffset ("Offset", Float) = 2
         _ShadowStrength ("Shadow Strength", Float) = 0.3
+        _BackgroundAspectRatio ("Background Aspect Ratio", Float) = 0.56
+        _BackgroundOffsetX ("Background Offset X", Float) = 0.0
+        _BackgroundOffsetY ("Background Offset Y", Float) = 0.5
+        _BackgroundScale ("Background Scale", Float) = 1
     }
     SubShader {
         Pass {
@@ -20,6 +24,10 @@
             uniform fixed _DirectionY;
             uniform fixed _ShadowOffset;
             uniform fixed _ShadowStrength;
+            uniform fixed _BackgroundAspectRatio;
+            uniform fixed _BackgroundOffsetX;
+            uniform fixed _BackgroundOffsetY;
+            uniform fixed _BackgroundScale;
             uniform sampler2D _MainTex;
             uniform sampler2D _Background;
 
@@ -47,7 +55,7 @@
             }
             
             fixed4 frag(v2f_img i) : SV_Target {
-            	fixed4 bgColor = tex2D(_Background, i.uv);
+            	fixed4 bgColor = tex2D(_Background, float2(i.uv.x+_BackgroundOffsetX, (i.uv.y/_BackgroundAspectRatio)+_BackgroundOffsetY)/_BackgroundScale);
 
                 float iterations = 15;
 				float effectiveIterations = iterations + _ShadowOffset;
