@@ -4,17 +4,13 @@ using System.Collections;
 public class LevelLoader : MonoBehaviour
 {
 
-	public GameObject level;
+	public int level = 1;
 	public GameObject cameraRig;
 	public GameObject worldSwitcher;
 
-	public GameObject player;
-	public Vector2 playerOffset;
-	
 	private Object levelInstance;
 	private Object cameraRigInstance;
 	private Object worldSwitcherInstance;
-	private Object playerInstance;
 	
 	private Controls controls;
 
@@ -52,10 +48,6 @@ public class LevelLoader : MonoBehaviour
 			Destroy (worldSwitcherInstance);
 			worldSwitcherInstance = null;
 		}
-		if (playerInstance != null) {
-			Destroy (playerInstance);
-			playerInstance = null;
-		}
 		if (cameraRigInstance != null) {
 			Destroy (cameraRigInstance);
 			cameraRigInstance = null;
@@ -68,13 +60,18 @@ public class LevelLoader : MonoBehaviour
 
 	public void setupLevel ()
 	{
-		levelInstance = Instantiate (level, transform.position, transform.rotation);
+		levelInstance = Instantiate (Resources.Load (string.Format ("Levels/Level{0:00}", level), typeof(GameObject)), transform.position, transform.rotation);
 		cameraRigInstance = Instantiate (cameraRig, transform.position, transform.rotation);
-		playerInstance = Instantiate (player, new Vector3 (transform.position.x + playerOffset.x, transform.position.y + playerOffset.y, transform.position.z), transform.rotation);
 		worldSwitcherInstance = Instantiate (worldSwitcher, transform.position, transform.rotation);
 		
 		if (ControlsInstance != null) {
 			ControlsInstance.Switch = true;
 		}
+	}
+	
+	public void nextLevel ()
+	{
+		level++;
+		restartLevel ();
 	}
 }

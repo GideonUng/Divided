@@ -13,6 +13,11 @@ public class WorldSwitcher : MonoBehaviour
 	
 	void Start ()
 	{
+		FindSwitchComponents ();
+	}
+
+	void FindSwitchComponents ()
+	{
 		controls = FindObjectOfType<Controls> ();
 		camSwitchers = (CameraWorldSwitcher[])FindObjectsOfType (typeof(CameraWorldSwitcher));
 		playerSwitchers = (PlayerWorldSwitcher[])FindObjectsOfType (typeof(PlayerWorldSwitcher));
@@ -23,6 +28,7 @@ public class WorldSwitcher : MonoBehaviour
 	void Update ()
 	{
 		if (controls.Switch != white) {
+			FindSwitchComponents ();
 			white = !white;
 			foreach (CameraWorldSwitcher switcher in camSwitchers) {
 				switcher.Switch (white);
