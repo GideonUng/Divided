@@ -1,3 +1,4 @@
+﻿using UnityEngine;
 using System.Collections;
 
 public class Soulstone : MonoBehaviour
@@ -24,4 +25,3 @@ public class Soulstone : MonoBehaviour
 		}
 	}
 }
-
