@@ -1,15 +1,12 @@
 ﻿Shader "Custom/Shadows" {
     Properties {
         _MainTex ("Greenscreen", 2D) = "white" {}
-        _Background ("Background", 2D) = "white" {}
         _DirectionX ("Direction X", Float) = 0.03
         _DirectionY ("Direction Y", Float) = 0.03
         _ShadowOffset ("Offset", Float) = 2
         _ShadowStrength ("Shadow Strength", Float) = 0.3
-        _BackgroundAspectRatio ("Background Aspect Ratio", Float) = 0.56
-        _BackgroundOffsetX ("Background Offset X", Float) = 0.0
-        _BackgroundOffsetY ("Background Offset Y", Float) = 0.5
-        _BackgroundScale ("Background Scale", Float) = 1
+        _ColorInside ("Color Inside", Color) = (1,1,1,1)
+        _ColorOutside ("Color Outside", Color) = (0,0,0,1)
     }
     SubShader {
         Pass {
@@ -19,18 +16,18 @@
             #pragma fragment frag
 
             #include "UnityCG.cginc"
+            #include "../../Shaders/noiseSimplex.cginc"
+            #include "../../Shaders/dither.cginc"
             
             uniform fixed _DirectionX;
             uniform fixed _DirectionY;
             uniform fixed _ShadowOffset;
             uniform fixed _ShadowStrength;
-            uniform fixed _BackgroundAspectRatio;
-            uniform fixed _BackgroundOffsetX;
-            uniform fixed _BackgroundOffsetY;
-            uniform fixed _BackgroundScale;
             uniform sampler2D _MainTex;
-            uniform sampler2D _Background;
-
+            
+            uniform fixed4 _ColorInside;
+            uniform fixed4 _ColorOutside;
+            
 			fixed calcAlpha(fixed4 color){
 				if(color.r < color.b){
 					return color.g - color.r;
@@ -54,8 +51,18 @@
             	return fixed4(blend(background.r, foreground.r, alpha),blend(background.g, foreground.g, alpha),blend(background.b, foreground.b, alpha),1.0);
             }
             
+            fixed4 getBgColor(fixed2 coords){
+            	//return tex2D(_Background, float2(coords.x+_BackgroundOffsetX, (coords.y/_BackgroundAspectRatio)+_BackgroundOffsetY)/_BackgroundScale);
+            	fixed4 colorDist = _ColorOutside - _ColorInside;
+            	fixed2 dist = abs(fixed2(0.5,0.5) - coords) * 2;
+            	fixed4 retColor = _ColorInside + colorDist * sqrt(dist.x*dist.x+dist.y*dist.y);
+
+            	return dither(retColor, coords);
+            	//return retColor;
+            }
+            
             fixed4 frag(v2f_img i) : SV_Target {
-            	fixed4 bgColor = tex2D(_Background, float2(i.uv.x+_BackgroundOffsetX, (i.uv.y/_BackgroundAspectRatio)+_BackgroundOffsetY)/_BackgroundScale);
+            	fixed4 bgColor = getBgColor(i.uv);
 
                 float iterations = 15;
 				float effectiveIterations = iterations + _ShadowOffset;
