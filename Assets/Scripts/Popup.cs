@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+public delegate void PopupAction ();
+
 public class Popup : MonoBehaviour
 {
 
@@ -11,11 +13,15 @@ public class Popup : MonoBehaviour
 	public string text;
 	public string actionName;
 	
+	public PopupAction popupAction;
+
+	private GameObject popup;
+	
 	// Use this for initialization
-	void Start ()
+	public	void Start ()
 	{
 		GameObject popups = GameObject.Find ("Popups");
-		GameObject popup = Instantiate (popupPanel) as GameObject;
+		popup = Instantiate (popupPanel) as GameObject;
 		popup.transform.SetParent (popups.transform, false);
 		
 		SetText ("ActionText", actionName.ToUpper ());
@@ -23,15 +29,22 @@ public class Popup : MonoBehaviour
 		
 		SetAction ("ActionButton", delegate() {
 			Debug.Log ("Action pressed!");
+			popupAction ();
+			closePopup ();
 		});
 		SetAction ("CancelButton", delegate() {
 			Debug.Log ("Cancel pressed!");
-			Destroy (popup);
-			Destroy (this.gameObject);
+			closePopup ();
 		});
 	}
+	
+	private void closePopup ()
+	{
+		Destroy (popup);
+		Destroy (this.gameObject);
+	}
 
-	void SetAction (string buttonName, UnityAction action)
+	private void SetAction (string buttonName, UnityAction action)
 	{
 		GameObject buttonGameObject = GameObject.Find (buttonName);
 		Button buttonComponent = buttonGameObject.GetComponent<Button> ();
@@ -40,7 +53,7 @@ public class Popup : MonoBehaviour
 		
 	}
 	
-	void SetText (string textName, string text)
+	private void SetText (string textName, string text)
 	{
 		GameObject textGameObject = GameObject.Find (textName);
 		Text textComponent = textGameObject.GetComponent<Text> ();
