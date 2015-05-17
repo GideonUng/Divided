@@ -33,6 +33,7 @@ public class Popup : MonoBehaviour
 		SetAction ("ActionButton", delegate() {
 			Debug.Log ("Action pressed!");
 			popupAction ();
+			closeMenu ();
 			closePopup ();
 		});
 		SetAction ("CancelButton", delegate() {
@@ -47,6 +48,11 @@ public class Popup : MonoBehaviour
 		animator.Play ("HidePopup");
 		//Destroy (popup);
 		Destroy (this.gameObject);
+	}
+
+	void closeMenu ()
+	{
+		GameObject.Find ("Menu").GetComponent<Animator> ().Play ("HideMenu");
 	}
 
 	private void SetAction (string buttonName, UnityAction action)
