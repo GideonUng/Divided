@@ -21,6 +21,9 @@ public class Popup : MonoBehaviour
 	public	void Start ()
 	{
 		GameObject popups = GameObject.Find ("Popups");
+		
+		purgeChildren (popups);
+		
 		popup = Instantiate (popupPanel) as GameObject;
 		popup.transform.SetParent (popups.transform, false);
 		
@@ -40,7 +43,9 @@ public class Popup : MonoBehaviour
 	
 	private void closePopup ()
 	{
-		Destroy (popup);
+		Animator animator = popup.GetComponent<Animator> ();
+		animator.Play ("HidePopup");
+		//Destroy (popup);
 		Destroy (this.gameObject);
 	}
 
@@ -60,5 +65,12 @@ public class Popup : MonoBehaviour
 		textComponent.text = text;
 		
 		Debug.Log ("Set " + textName + " to " + text);
+	}
+
+	void purgeChildren (GameObject popups)
+	{
+		foreach (Transform childTransform in popups.transform) {
+			Destroy (childTransform.gameObject);
+		}
 	}
 }
